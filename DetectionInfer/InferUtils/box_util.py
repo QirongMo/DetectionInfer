@@ -9,6 +9,9 @@ def get_iou(boxes1, boxes2):
     :param boxes2: [m, 4]
     :return: iou, [n, m]
     """
+    if boxes1.dtype == np.float16:
+        boxes1 = boxes1.astype(np.float32)
+        boxes2 = boxes2.astype(np.float32)
     n = boxes1.shape[0]
     m = boxes2.shape[0]
     # 将boxes的每个box复制M遍，对应于与boxes2的每个box求iou，相当于将boxes复制M遍
