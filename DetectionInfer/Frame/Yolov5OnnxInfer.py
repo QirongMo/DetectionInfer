@@ -75,6 +75,9 @@ class Yolov5OnnxInfer(BaseFrameInfer):
         img = img.transpose((2, 0, 1))
         if len(img.shape) == 3:
             img = img[None]  # expand for batch dim
+        inputs_info = self.network.get_inputs()
+        if inputs_info[0].type == "tensor(float16)":  # 半精度
+            img = img.astype(np.float16)
         pred_results = self.network.run([self.network.get_outputs()[0].name],
                                         {self.network.get_inputs()[0].name: img})[0]
         results = self.decode_result(pred_results[0])
