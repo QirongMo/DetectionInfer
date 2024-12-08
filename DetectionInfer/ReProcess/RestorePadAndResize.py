@@ -20,7 +20,7 @@ class RestorePadAndResize:
             box['x1'], box['y1'], box['x2'], box['y2'] = new_x1, new_y1, new_x2, new_y2
             detection['box'] = box
             # points
-            points = detection["points"]
+            points = detection.get("points")
             if points is not None:
                 points[:, 0] = (points[:, 0] - self.pad_left)/self.scale_x
                 points[:, 1] = (points[:, 1] - self.pad_top)/self.scale_y

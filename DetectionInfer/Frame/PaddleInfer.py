@@ -1,10 +1,10 @@
 
-from BaseFrame import BaseFrameInfer
+from .BaseFrame import BaseFrameInfer
 import paddle.inference as paddle_infer
 import numpy as np
 
 
-class PaddleInfer(BaseFrameInfer):
+class PaddleModel(BaseFrameInfer):
     def __init__(self, model_config={}):
         """
         :param model_config: cfg、weight、thresh、nms_thresh
@@ -15,12 +15,12 @@ class PaddleInfer(BaseFrameInfer):
         infer_model = self.model_config['infer_model']  # 'model.pdmodel'
         infer_params = self.model_config['infer_params']  # model.pdiparams
         config = paddle_infer.Config(infer_model, infer_params)
-        device = "GPU"
-        if device == 'GPU':
+        device = "cpu"
+        if device.lower() == 'gpu':
             # initial GPU memory(M), device ID
             config.enable_use_gpu(200, gpu_idx)
             # optimize graph and fuse op
-            config.switch_ir_optim(True)
+            # config.switch_ir_optim(True)
         else:
             cpu_threads = 1
             config.disable_gpu()

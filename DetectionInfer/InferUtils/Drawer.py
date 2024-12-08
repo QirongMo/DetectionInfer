@@ -66,7 +66,7 @@ class DrawerResult:
                 cv2.rectangle(img, (x1-1, y1-text_size[1]), (x1+text_size[0], y1), (0, 0, 255), -1)
                 self.free_type.putText(img, text, (x1, y1), font_scale, (0, 0, 0), font_thickness, 8, True)
             # points
-            points = detection["points"]
+            points = detection.get("points")
             if points is None:
                 continue
             for point in points:
